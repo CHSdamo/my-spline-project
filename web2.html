@@ -3,30 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spline Model Example</title>
+    <title>Spline 3D Model Example</title>
     <style>
         #canvas3d {
             width: 100%;
             height: 600px;
             display: block;
         }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Spline 3D Model</h1>
+    <h1>Interactive 3D T-shirt Model</h1>
+
+    <!-- Canvas for rendering the Spline 3D model -->
     <canvas id="canvas3d"></canvas>
 
-    <script type="module">
-        import { Application } from 'https://unpkg.com/@splinetool/runtime@latest/build/runtime.js';
+    <!-- Buttons to change color or interact with the 3D model -->
+    <div class="button-container">
+        <button id="button1">Cream</button>
+        <button id="button2">White</button>
+        <button id="button3">Black</button>
+        <button id="button4">Blue</button>
+        <button id="button5">Red</button>
+    </div>
 
+    <!-- Import Spline runtime library and load the Spline project -->
+    <script type="module">
+        import { Application } from 'https://unpkg.com/@splinetool/runtime@1.0.54/build/runtime.js';
+
+        // Find the canvas element where the 3D model will be rendered
         const canvas = document.getElementById('canvas3d');
         const spline = new Application(canvas);
 
-        // 使用最新的 Spline 分享链接
-        spline.load('https://my.spline.design/iphone14procopy-0d793cb6fce92a1abcff517249726d82/')
+        // Load the Spline project using the project URL
+        spline.load('https://prod.spline.design/neFWS1ZzGq8WmX-G/scene.splinecode')
             .then(() => {
                 console.log("Spline model loaded successfully!");
+
+                // Set up button interactions to change colors
+                const button1 = document.getElementById('button1');
+                button1.addEventListener('click', () => {
+                    spline.setVariables({ cream: 100, white: 0, black: 0, blue: 0, red: 0 });
+                });
+
+                const button2 = document.getElementById('button2');
+                button2.addEventListener('click', () => {
+                    spline.setVariables({ cream: 0, white: 100, black: 0, blue: 0, red: 0 });
+                });
+
+                const button3 = document.getElementById('button3');
+                button3.addEventListener('click', () => {
+                    spline.setVariables({ cream: 0, white: 0, black: 100, blue: 0, red: 0 });
+                });
+
+                const button4 = document.getElementById('button4');
+                button4.addEventListener('click', () => {
+                    spline.setVariables({ cream: 0, white: 0, black: 0, blue: 100, red: 0 });
+                });
+
+                const button5 = document.getElementById('button5');
+                button5.addEventListener('click', () => {
+                    spline.setVariables({ cream: 0, white: 0, black: 0, blue: 0, red: 100 });
+                });
             })
             .catch((error) => {
                 console.error("Error loading Spline model:", error);
